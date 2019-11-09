@@ -26,4 +26,21 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, vote.hash);
         }
     }
+    public static boolean isVoteValid(){
+        VoteBlock currentBlock;
+        VoteBlock previousBlock;
+        for(int i = 1; i < voteChain.size();i++){
+            currentBlock = voteChain.get(i);
+            previousBlock = voteChain.get(i-1);
+            if(!currentBlock.hash.equals(currentBlock.calculateHash())){
+                Log.i(TAG,"Current Votes are not valid");
+                return false;
+            }
+            if(!previousBlock.hash.equals(currentBlock.prevHash)){
+                Log.i(TAG,"Previous Votes are not valid");
+                return false;
+            }
+        }
+        return true;
+    }
 }
