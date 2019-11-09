@@ -13,5 +13,11 @@ public class VoteBlock {
         this.data = data;
         this.prevHash = prevHash;
         this.timeStamp = new Date().getTime();
+        this.hash = calculateHash();
+    }
+
+    public String calculateHash(){
+        String calculatedHash = StringHelper.applySHA256( prevHash + data + Long.toString(timeStamp));
+        return calculatedHash;
     }
 }
