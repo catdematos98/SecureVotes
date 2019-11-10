@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
+import android.widget.CheckBox;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,10 +13,12 @@ import java.util.List;
 
 public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.ViewHolder> {
 
+    public static ArrayList<String> selected;
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public RadioButton rbView;
+        public CheckBox rbView;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -25,7 +27,7 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            rbView = (RadioButton) itemView.findViewById(R.id.rbCandidate);
+            rbView = (CheckBox) itemView.findViewById(R.id.rbCandidate);
         }
     }
 
@@ -54,15 +56,32 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
     public void onBindViewHolder(CandidatesAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
         Candidate candidate = mCandidates.get(position);
+        selected = new ArrayList<>();
 
         // Set item views based on your views and data model
-        RadioButton rbCandidate = viewHolder.rbView;
+        final CheckBox rbCandidate = viewHolder.rbView;
         rbCandidate.setText(candidate.getName());
+        rbCandidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(rbCandidate.isChecked()){
+                    selected.add(rbCandidate.getText().toString());
+                }
+                else{
+                    selected.remove(rbCandidate.getText().toString());
+                }
+
+            }
+        });
     }
 
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
         return mCandidates.size();
+    }
+
+    public static ArrayList<String> getSelected(){
+        return selected;
     }
 }

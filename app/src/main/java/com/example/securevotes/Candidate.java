@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Candidate {
     String name;
 
+
+
     public Candidate(String name) {
         this.name = name;
     }

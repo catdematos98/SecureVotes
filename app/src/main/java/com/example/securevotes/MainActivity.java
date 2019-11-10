@@ -15,11 +15,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "ChainTesting";
     public static ArrayList<VoteBlock> voteChain = new ArrayList<VoteBlock>();
+    private ArrayList<Voter> voters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
+
+        voters = new ArrayList<>();
 
         EditText licenseET = (EditText)findViewById(R.id.etLicense);
         EditText stateET = (EditText)findViewById(R.id.etState);
@@ -34,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Voter voter = new Voter(voterID, license, state);
+                if(voters.contains(voter)){
+                    Log.i(TAG, "User already voted");
+                    return;
+                }
+                else{
+                    voters.add(voter);
+                }
                 Intent i = new Intent(MainActivity.this, CastingVoteTransaction.class);
                 startActivity(i);
             }
