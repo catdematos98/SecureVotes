@@ -1,6 +1,7 @@
 package com.example.securevotes;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.ViewHolder> {
 
+    private static final String TAG = "CandidatesAdapter";
     public static ArrayList<String> selected;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -31,9 +33,9 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
         }
     }
 
-    private List<Candidate> mCandidates;
+    private List<String> mCandidates;
 
-    public CandidatesAdapter(ArrayList<Candidate> candidates) {
+    public CandidatesAdapter(ArrayList<String> candidates) {
         mCandidates = candidates;
     }
 
@@ -55,12 +57,14 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
     @Override
     public void onBindViewHolder(CandidatesAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        Candidate candidate = mCandidates.get(position);
+        Log.i(TAG, String.valueOf(position));
+        String candidate = mCandidates.get(position);
+        Log.i(TAG, candidate);
         selected = new ArrayList<>();
 
         // Set item views based on your views and data model
         final CheckBox rbCandidate = viewHolder.rbView;
-        rbCandidate.setText(candidate.getName());
+        rbCandidate.setText(candidate);
         rbCandidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
